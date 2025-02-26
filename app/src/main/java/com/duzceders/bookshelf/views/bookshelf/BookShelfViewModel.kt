@@ -13,10 +13,11 @@ import com.duzceders.bookshelf.BookShelfApplication
 import com.duzceders.bookshelf.R
 import com.duzceders.bookshelf.data.BookShelfRepository
 import com.duzceders.bookshelf.model.Book
+import com.duzceders.bookshelf.model.BookShelfItems
 import kotlinx.coroutines.launch
 
 sealed interface BookShelfUIState {
-    data class Success(val data: List<Book>) : BookShelfUIState
+    data class Success(val data: BookShelfItems) : BookShelfUIState
     data object Loading : BookShelfUIState
     data class Error(val message: Int) : BookShelfUIState
 }
@@ -30,7 +31,7 @@ class BookShelfViewModel(val bookShelfRepository: BookShelfRepository) : ViewMod
         getBooks()
     }
 
-    private fun getBooks() {
+      fun getBooks() {
         bookShelfUIState = BookShelfUIState.Loading
         viewModelScope.launch {
             try {
