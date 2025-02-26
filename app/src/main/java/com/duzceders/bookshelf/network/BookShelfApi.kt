@@ -10,7 +10,6 @@ interface BookShelfApi {
     @GET("volumes")
     suspend fun getBooks(@Query("q") query: String): List<Book>
 
-
     @GET("volumes/{volume_id}")
     suspend fun getBook(@Path("volume_id") volumeId: String): Book
 }
