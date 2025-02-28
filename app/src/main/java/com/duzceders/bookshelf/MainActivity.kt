@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.duzceders.bookshelf.core.navigation.AppNavigation
 import com.duzceders.bookshelf.ui.theme.BookShelfTheme
 import com.duzceders.bookshelf.views.bookshelf.BookShelfApp
 
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BookShelfTheme {
-                BookShelfApp()
+                AppNavigation()
             }
         }
     }

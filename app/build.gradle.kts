@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -52,11 +53,16 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation (libs.retrofit2.converter.gson)
-    implementation (libs.retrofit2.converter.gson)
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.retrofit2.converter.gson)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+
+
+
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
