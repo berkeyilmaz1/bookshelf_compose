@@ -8,15 +8,13 @@ interface BookShelfRepository {
     /// This function will return a list of books
     suspend fun getBooks(): BookShelfItems
 
-    /// This function will return a book by its id
-    // suspend fun getBookById(id: Int): Book
+    suspend fun getBookById(bookId: String): Book
 }
 
-class BookShelfRepositoryImpl(private val BookShelfApi: BookShelfApi) :
+class BookShelfRepositoryImpl(private val bookShelfApi: BookShelfApi) :
     BookShelfRepository {
-    /// This function will return a list of books by calling the getBooks function from BookShelfApi
-    /// it will return a list of books with the keyword "turkish history"
-    override suspend fun getBooks(): BookShelfItems = BookShelfApi.getBooks("jazz history")
-    /// This function will return a book by its id by calling the getBookById function from BookShelfApi
-    // override suspend fun getBookById(id: Int): Book = BookShelfApi.getBookById(bookId)
+
+    override suspend fun getBooks(): BookShelfItems = bookShelfApi.getBooks("jazz history")
+
+    override suspend fun getBookById(bookId: String): Book = bookShelfApi.getBookById(bookId)
 }

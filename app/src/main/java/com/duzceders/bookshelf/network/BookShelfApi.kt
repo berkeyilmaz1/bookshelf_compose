@@ -11,5 +11,5 @@ interface BookShelfApi {
     suspend fun getBooks(@Query("q") query: String): BookShelfItems
 
     @GET("volumes/{volume_id}")
-    suspend fun getBookById(@Path("volume_id") volumeId: String): Book
+    suspend fun getBookById(@Path("volume_id") bookID: String): Book
 }
