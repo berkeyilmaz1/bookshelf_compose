@@ -1,6 +1,5 @@
 package com.duzceders.bookshelf.views.bookshelf
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,7 +11,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.duzceders.bookshelf.BookShelfApplication
 import com.duzceders.bookshelf.R
 import com.duzceders.bookshelf.data.BookShelfRepository
-import com.duzceders.bookshelf.model.Book
 import com.duzceders.bookshelf.model.BookShelfItems
 import kotlinx.coroutines.launch
 
@@ -37,7 +35,6 @@ class BookShelfViewModel(val bookShelfRepository: BookShelfRepository) : ViewMod
             try {
                 bookShelfUIState = BookShelfUIState.Success(bookShelfRepository.getBooks())
             } catch (e: Exception) {
-                Log.e("BookShelfViewModel", "Unexpected error: ${e.message}")
                 bookShelfUIState = BookShelfUIState.Error(R.string.error)
             }
         }

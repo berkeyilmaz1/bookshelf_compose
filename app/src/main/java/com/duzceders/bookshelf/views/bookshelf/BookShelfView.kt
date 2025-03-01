@@ -2,6 +2,7 @@ package com.duzceders.bookshelf.views.bookshelf
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,10 +22,12 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.duzceders.bookshelf.R
+import com.duzceders.bookshelf.core.navigation.RouteNames
 import com.duzceders.bookshelf.model.Book
 import com.duzceders.bookshelf.model.BookShelfItems
 
@@ -33,19 +36,24 @@ fun BookShelfView(
     bookShelfUIState: BookShelfUIState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    navController: NavController
 ) {
     when (bookShelfUIState) {
         is BookShelfUIState.Loading -> {
-            LoadingScreen(modifier = modifier)
+            LoadingView(modifier = modifier)
         }
 
         is BookShelfUIState.Error -> {
-            ErrorScreen(retryAction = retryAction, modifier = modifier)
+            ErrorView(retryAction = retryAction, modifier = modifier)
         }
 
         is BookShelfUIState.Success -> {
-            BookShelfGrid(bookList = bookShelfUIState.data, contentPadding = contentPadding)
+            BookShelfGrid(
+                bookList = bookShelfUIState.data,
+                contentPadding = contentPadding,
+                navController = navController
+            )
         }
     }
 }
@@ -54,22 +62,27 @@ fun BookShelfView(
 @Composable
 fun BookShelfGrid(
     bookList: BookShelfItems,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    navController: NavController
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = contentPadding
     ) {
         items(bookList.items.size) { index ->
-            BookCard(book = bookList.items[index])
+            BookCard(book = bookList.items[index], navController = navController)
         }
     }
 }
 
 @Composable
-fun BookCard(book: Book) {
+fun BookCard(book: Book, navController: NavController) {
     val imageUrl = book.volumeInfo.imageLinks?.thumbnail ?: "https://picsum.photos/536/354"
-    Column {
+
+
+
+    Column(modifier = Modifier.clickable {
+        navController.navigate("bookDetail/${book.id}") }) {
         AsyncImage(
             modifier = Modifier
                 .fillMaxHeight()
@@ -77,11 +90,6 @@ fun BookCard(book: Book) {
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl.replace("http", "https"))
                 .crossfade(true)
-                .listener(
-                    onError = { request, throwable ->
-                        Log.e("Coil", "Image loading failed: ${throwable.throwable.message}")
-                    }
-                )
                 .build(),
             contentDescription = book.volumeInfo.title,
             placeholder = painterResource(id = R.drawable.loading_img),
@@ -96,7 +104,7 @@ fun BookCard(book: Book) {
 }
 
 @Composable
-fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+fun ErrorView(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -120,7 +128,7 @@ fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
+fun LoadingView(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(R.drawable.loading_img),
         contentDescription = stringResource(R.string.loading),

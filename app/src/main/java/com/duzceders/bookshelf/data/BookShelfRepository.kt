@@ -5,7 +5,7 @@ import com.duzceders.bookshelf.model.BookShelfItems
 import com.duzceders.bookshelf.network.BookShelfApi
 
 interface BookShelfRepository {
-    /// This function will return a list of books
+
     suspend fun getBooks(): BookShelfItems
 
     suspend fun getBookById(bookId: String): Book

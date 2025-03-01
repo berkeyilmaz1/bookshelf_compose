@@ -12,12 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.duzceders.bookshelf.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookShelfApp() {
+fun BookShelfApp(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,7 +43,8 @@ fun BookShelfApp() {
                 retryAction = bookShelfViewModel::getBooks,
                 bookShelfUIState = bookShelfViewModel.bookShelfUIState,
                 contentPadding = innerPadding,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                navController = navController
             )
         }
     }
