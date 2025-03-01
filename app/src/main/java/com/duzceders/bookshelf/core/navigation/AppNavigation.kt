@@ -1,6 +1,6 @@
 package com.duzceders.bookshelf.core.navigation
 
-import android.util.Log
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,7 +17,6 @@ import com.duzceders.bookshelf.views.bookshelf.BookShelfApp
 enum class RouteNames(val route: String) {
     BookShelf("bookShelf"),
     BookDetail("bookDetail/{bookId}")
-
 }
 
 enum class RouteArguments(val argument: String) {
